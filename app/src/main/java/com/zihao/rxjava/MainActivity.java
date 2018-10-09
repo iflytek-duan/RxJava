@@ -79,17 +79,27 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //        }
 
         // doOnNext在订阅者接收到数据前做点事儿
-        Observable.just(1, 2, 3, 4, 5)
-                .doOnNext(new Consumer<Integer>() {
+//        Observable.just(1, 2, 3, 4, 5)
+//                .doOnNext(new Consumer<Integer>() {
+//                    @Override
+//                    public void accept(Integer integer) throws Exception {
+//                        Log.e(TAG, "保存 :" + integer);
+//                    }
+//                }).subscribe(new Consumer<Integer>() {
+//            @Override
+//            public void accept(Integer integer) throws Exception {
+//                Log.e(TAG, "accept :" + integer);
+//            }
+//        });
+
+        // skip跳过操作
+        Observable.just(1, 2, 2, 4, 5, 3)
+                .skip(2)
+                .subscribe(new Consumer<Integer>() {
                     @Override
                     public void accept(Integer integer) throws Exception {
-                        Log.e(TAG, "保存 :" + integer);
+                        Log.e(TAG, "skip,accept :" + integer);
                     }
-                }).subscribe(new Consumer<Integer>() {
-            @Override
-            public void accept(Integer integer) throws Exception {
-                Log.e(TAG, "accept :" + integer);
-            }
-        });
+                });
     }
 }
