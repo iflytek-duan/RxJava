@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         initView();
 
+        // just本身是一个简单的发射器，用于一次调用onNext()方法
 //        Observable.just(1, 4, 5, 3, 1, 4, 6, 5, 7)
 //                .distinct()
 //                .filter(new Predicate<Integer>() {
