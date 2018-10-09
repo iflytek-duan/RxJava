@@ -93,12 +93,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //        });
 
         // skip跳过操作
-        Observable.just(1, 2, 2, 4, 5, 3)
-                .skip(2)
+//        Observable.just(1, 2, 2, 4, 5, 3)
+//                .skip(2)
+//                .subscribe(new Consumer<Integer>() {
+//                    @Override
+//                    public void accept(Integer integer) throws Exception {
+//                        Log.e(TAG, "skip,accept :" + integer);
+//                    }
+//                });
+
+        // take接受操作，接受一个 long 型参数 count ，代表至多接收 count 个数据。
+        Observable.just(1, 2, 3, 4, 5)
+                .take(3)
                 .subscribe(new Consumer<Integer>() {
                     @Override
                     public void accept(Integer integer) throws Exception {
-                        Log.e(TAG, "skip,accept :" + integer);
+                        Log.e(TAG, "take,accept :" + integer);
                     }
                 });
     }
