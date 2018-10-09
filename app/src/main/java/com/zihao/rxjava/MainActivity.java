@@ -6,13 +6,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 
-import java.util.concurrent.TimeUnit;
-
 import io.reactivex.Observable;
-import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
-import io.reactivex.schedulers.Schedulers;
 
 @SuppressLint("CheckResult")
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
@@ -67,19 +63,33 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //                });
 
         // interval间隔任务
-        if (mDisposableInterval != null && !mDisposableInterval.isDisposed()) {
-            mDisposableInterval.dispose();
-            mDisposableInterval = null;
-        } else {
-            mDisposableInterval = Observable.interval(0, 2, TimeUnit.SECONDS)
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new Consumer<Long>() {
-                        @Override
-                        public void accept(Long aLong) throws Exception {
-                            Log.e(TAG, "timer :" + aLong + " at " + System.currentTimeMillis());
-                        }
-                    });
-        }
+//        if (mDisposableInterval != null && !mDisposableInterval.isDisposed()) {
+//            mDisposableInterval.dispose();
+//            mDisposableInterval = null;
+//        } else {
+//            mDisposableInterval = Observable.interval(0, 2, TimeUnit.SECONDS)
+//                    .subscribeOn(Schedulers.io())
+//                    .observeOn(AndroidSchedulers.mainThread())
+//                    .subscribe(new Consumer<Long>() {
+//                        @Override
+//                        public void accept(Long aLong) throws Exception {
+//                            Log.e(TAG, "timer :" + aLong + " at " + System.currentTimeMillis());
+//                        }
+//                    });
+//        }
+
+        // doOnNext在订阅者接收到数据前做点事儿
+        Observable.just(1, 2, 3, 4, 5)
+                .doOnNext(new Consumer<Integer>() {
+                    @Override
+                    public void accept(Integer integer) throws Exception {
+                        Log.e(TAG, "保存 :" + integer);
+                    }
+                }).subscribe(new Consumer<Integer>() {
+            @Override
+            public void accept(Integer integer) throws Exception {
+                Log.e(TAG, "accept :" + integer);
+            }
+        });
     }
 }
